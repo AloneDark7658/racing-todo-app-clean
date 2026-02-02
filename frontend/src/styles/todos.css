@@ -1,0 +1,108 @@
+/* Genel Ayarlar */
+.todo-page {
+  max-width: 520px;
+  margin: 80px auto;
+  padding: 0 20px;
+}
+
+.todo-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Başlık */
+.todo-title {
+  text-align: center;
+  margin-bottom: 32px;
+  color: #020617;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+/* Form */
+.todo-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.todo-form input {
+  flex: 1;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 2px solid #e5e7eb;
+  font-size: 1rem;
+  color: #000000;
+}
+
+.todo-form input::placeholder {
+  color: #9ca3af;
+}
+
+.todo-form button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 0 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Todo Item */
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: #e5e7eb;
+  margin-bottom: 14px;
+}
+
+.todo-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* NORMAL TODO YAZISI */
+.todo-text {
+  color: #000000 !important;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+/* COMPLETED TODO */
+.todo-completed .todo-text {
+  color: #6b7280 !important;
+  text-decoration: line-through;
+}
+
+/* Checkbox */
+.todo-left input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #2563eb;
+  cursor: pointer;
+}
+
+/* Butonlar */
+.todo-item button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin-left: 6px;
+}
+
+.todo-item {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.todo-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
