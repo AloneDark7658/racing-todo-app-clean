@@ -1,16 +1,75 @@
-# React + Vite
+# 📝 Fullstack Todo Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bu proje, React (Vite) ve Express.js kullanılarak geliştirilmiş bir **fullstack To-Do uygulamasıdır**.  
+JWT tabanlı kimlik doğrulama, rol bazlı yetkilendirme (Admin/User) ve işlem loglama özellikleri içermektedir.
 
-Currently, two official plugins are available:
+Projenin amacı; temel web geliştirme yetkinliği, sistem tasarımı yaklaşımı ve frontend–backend entegrasyonunu göstermektir.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Canlı Linkler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend:** https://todo-frontend-0i1v.onrender.com
+- **Backend API:** https://todo-backend-bg0y.onrender.com
+- **GitHub Repo:** https://github.com/AloneDark7658/racing-todo-app-clean
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Kullanılan Teknolojiler
+
+### Frontend
+- React
+- React Router (**HashRouter**)
+- Vite
+- CSS
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+- JWT Authentication
+- Bcrypt
+
+### Deploy & Altyapı
+- Render (Frontend & Backend)
+- MongoDB Atlas
+
+---
+
+## ✨ Özellikler
+
+### 👤 Kullanıcı İşlemleri
+- Kullanıcı kayıt (Register)
+- Kullanıcı giriş (Login)
+
+### ✅ Todo İşlemleri
+- Todo ekleme
+- Todo silme
+- Todo güncelleme (edit)
+- Todo tamamlandı / tamamlanmadı durumu
+- Sayfa yenilendiğinde verilerin korunması
+
+### 🛡️ Yetkilendirme & Loglama
+- Rol bazlı erişim (Admin / User)
+- Yapılan işlemlerin loglanması (CREATE, UPDATE, DELETE)
+- Admin kullanıcılar için log görüntüleme paneli
+- Normal kullanıcılar admin sayfasına erişemez
+
+---
+
+## 👑 Admin Yetkilendirme
+
+Admin yetkisi **güvenlik nedeniyle frontend üzerinden verilmez**.
+
+Bir kullanıcıyı admin yapmak için MongoDB üzerinde ilgili kullanıcının `role` alanı `"admin"` olarak güncellenmelidir.
+
+
+---
+
+## ⚙️ Local Çalıştırma
+
+### Backend
+```bash
+cd backend
+npm install
+npm run dev
