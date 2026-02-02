@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Todos from "./pages/Todos";
@@ -7,7 +7,7 @@ import Navbar from "./components/Navbar";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Navbar />
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -15,7 +15,7 @@ function App() {
         <Route path="/todos" element={<Todos />} />
         <Route path="/admin/logs" element={<AdminLogs />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
