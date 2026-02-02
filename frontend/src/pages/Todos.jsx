@@ -4,7 +4,6 @@ import {
   createTodo,
   deleteTodo,
   updateTodo,
-  toggleTodo,
 } from "../api";
 import "../styles/todos.css";
 
@@ -12,43 +11,53 @@ export default function Todos() {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
   const [editingId, setEditingId] = useState(null);
-  const [editingText, setEditingText] = useState("");
+  const [editText, setEditText] = useState("");
+
+  useEffect(() => {
+    loadTodos();
+  }, []);
 
   const loadTodos = async () => {
     const data = await getTodos();
     setTodos(data);
   };
 
-  useEffect(() => {
-    loadTodos();
-  }, []);
-
   const handleAdd = async (e) => {
     e.preventDefault();
     if (!newTodo.trim()) return;
 
-    await createTodo(newTodo);
+    const todo = await createTodo({ title: newTodo });
+    setTodos([todo, ...todos]);
     setNewTodo("");
-    loadTodos();
   };
 
   const handleDelete = async (id) => {
     await deleteTodo(id);
-    loadTodos();
+    setTodos(todos.filter((t) => t._id !== id));
   };
 
-  const handleUpdate = async (id) => {
-    if (!editingText.trim()) return;
+  const handleToggle = async (todo) => {
+    const updated = await updateTodo(todo._id, {
+      completed: !todo.completed,
+      title: todo.title,
+    });
 
-    await updateTodo(id, editingText);
+    setTodos(todos.map((t) => (t._id === todo._id ? updated : t)));
+  };
+
+  const startEdit = (todo) => {
+    setEditingId(todo._id);
+    setEditText(todo.title);
+  };
+
+  const saveEdit = async (id) => {
+    const updated = await updateTodo(id, {
+      title: editText,
+    });
+
+    setTodos(todos.map((t) => (t._id === id ? updated : t)));
     setEditingId(null);
-    setEditingText("");
-    loadTodos();
-  };
-
-  const handleToggle = async (id, completed) => {
-    await toggleTodo(id, completed);
-    loadTodos();
+    setEditText("");
   };
 
   return (
@@ -56,17 +65,15 @@ export default function Todos() {
       <div className="todo-card">
         <h2 className="todo-title">My Todo List</h2>
 
-        {/* ADD TODO */}
         <form className="todo-form" onSubmit={handleAdd}>
           <input
-            placeholder="What do you need to do?"
             value={newTodo}
             onChange={(e) => setNewTodo(e.target.value)}
+            placeholder="What do you need to do?"
           />
-          <button type="submit">Add</button>
+          <button>Add</button>
         </form>
 
-        {/* TODO LIST */}
         <ul>
           {todos.map((todo) => (
             <li
@@ -79,25 +86,28 @@ export default function Todos() {
                 <input
                   type="checkbox"
                   checked={todo.completed}
-                  onChange={() =>
-                    handleToggle(todo._id, !todo.completed)
-                  }
+                  onChange={() => handleToggle(todo)}
                 />
-                <span className="todo-text">{todo.title}</span>
+
+                {editingId === todo._id ? (
+                  <input
+                    className="edit-input"
+                    value={editText}
+                    onChange={(e) => setEditText(e.target.value)}
+                    onBlur={() => saveEdit(todo._id)}
+                    onKeyDown={(e) =>
+                      e.key === "Enter" && saveEdit(todo._id)
+                    }
+                    autoFocus
+                  />
+                ) : (
+                  <span className="todo-text">{todo.title}</span>
+                )}
               </div>
 
-              <div>
-                <button
-                  onClick={() => {
-                    setEditingId(todo._id);
-                    setEditingText(todo.title);
-                  }}
-                >
-                  ✏️
-                </button>
-                <button onClick={() => handleDelete(todo._id)}>
-                  🗑
-                </button>
+              <div className="todo-actions">
+                <button onClick={() => startEdit(todo)}>✏️</button>
+                <button onClick={() => handleDelete(todo._id)}>🗑️</button>
               </div>
             </li>
           ))}

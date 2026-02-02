@@ -1,5 +1,6 @@
 const API_URL = "https://todo-backend-bg0y.onrender.com";
 
+/* AUTH */
 export const login = async (email, password) => {
   const res = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
@@ -18,6 +19,7 @@ export const register = async (username, email, password) => {
   return res.json();
 };
 
+/* TODOS */
 export const getTodos = async () => {
   const token = localStorage.getItem("token");
 
@@ -30,7 +32,7 @@ export const getTodos = async () => {
   return res.json();
 };
 
-export const createTodo = async (title, description) => {
+export const createTodo = async (data) => {
   const token = localStorage.getItem("token");
 
   const res = await fetch(`${API_URL}/todos`, {
@@ -39,19 +41,22 @@ export const createTodo = async (title, description) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ title, description }),
+    body: JSON.stringify(data), // { title }
   });
 
   return res.json();
 };
 
-export const getLogs = async () => {
+export const updateTodo = async (id, data) => {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`${API_URL}/logs`, {
+  const res = await fetch(`${API_URL}/todos/${id}`, {
+    method: "PUT",
     headers: {
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
+    body: JSON.stringify(data), // { title?, completed? }
   });
 
   return res.json();
@@ -68,29 +73,15 @@ export const deleteTodo = async (id) => {
   });
 };
 
-export const updateTodo = async (id, title) => {
+/* LOGS (ADMIN) */
+export const getLogs = async () => {
   const token = localStorage.getItem("token");
 
-  await fetch(`${API_URL}/todos/${id}`, {
-    method: "PUT",
+  const res = await fetch(`${API_URL}/logs`, {
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ title }),
   });
+
+  return res.json();
 };
-
-export const toggleTodo = async (id, completed) => {
-  const token = localStorage.getItem("token");
-
-  await fetch(`${API_URL}/todos/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ completed }),
-  });
-};
-
