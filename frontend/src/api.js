@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000";
+const API_URL = "https://todo-backend-bg0y.onrender.com";
 
 export const login = async (email, password) => {
   const res = await fetch(`${API_URL}/auth/login`, {
